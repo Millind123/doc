@@ -26,7 +26,7 @@ jobs:
       - name: Access JSON from previous job
         run: |
           echo "JSON from previous job:"
-          echo '${{ needs.load-json.outputs.json-data }}'
+          echo 'previous job wala ${{ needs.load-json.outputs.json-data }}'
 
           # Example: extract a key using jq
-          echo '${{ needs.load-json.outputs.json-data }}' | jq '.api_key'
+          echo 'extract key wala ${{ needs.load-json.outputs.json-data }}' | jq '.api_key'
