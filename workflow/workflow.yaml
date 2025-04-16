@@ -1,0 +1,32 @@
+name: Use JSON Across Jobs
+
+on: [push]
+
+jobs:
+  load-json:
+    runs-on: ubuntu-latest
+    outputs:
+      json-data: ${{ steps.load.outputs.json }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Load JSON into variable
+        id: load
+        run: |
+          JSON_CONTENT=$(cat .github/workflow/hi.json | jq -c .)
+          echo "json=$JSON_CONTENT" >> "$GITHUB_OUTPUT"
+
+  use-json:
+    needs: load-json
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Access JSON from previous job
+        run: |
+          echo "JSON from previous job:"
+          echo '${{ needs.load-json.outputs.json-data }}'
+
+          # Example: extract a key using jq
+          echo '${{ needs.load-json.outputs.json-data }}' | jq '.api_key'
