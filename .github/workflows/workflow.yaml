@@ -15,7 +15,7 @@ jobs:
       - name: Load JSON into variable
         id: load
         run: |
-          JSON_CONTENT=$(cat .github/workflow/hi.json | jq -c .)
+          JSON_CONTENT=$(cat .github/workflows/hi.json | jq -c .)
           echo "json=$JSON_CONTENT" >> "$GITHUB_OUTPUT"
 
   use-json:
